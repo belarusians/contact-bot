@@ -32,6 +32,7 @@ GREETINGS_MSG = "Вітаем! Мы - беларуская дыяспара ў �
 
 
 def start(update: Update, context: CallbackContext) -> str:
+    context.user_data.clear()
     reply_keyboard = [[refugee.TO_BTN, ideas.TO_BTN, other.TO_BTN]]
 
     update.message.reply_text(
@@ -49,14 +50,20 @@ def cancel(update: Update, context: CallbackContext) -> int:
     return ConversationHandler.END
 
 
+# def debug_handler(update: Update, context: CallbackContext) -> str:
+#     return ConversationHandler.END
+
+
 def main() -> None:
-    # persistence = PicklePersistence(filename='contact-bot')
     updater = Updater(sys.argv[1])
 
     dispatcher = updater.dispatcher
 
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
+        entry_points=[
+            # MessageHandler(Filters.all, debug_handler),
+            CommandHandler('start', start)
+        ],
         states={
             START: [
                 MessageHandler(Filters.regex(refugee.TO_BTN), refugee.handler),
@@ -69,6 +76,7 @@ def main() -> None:
             help_with_advocate.STATE: help_with_advocate.handlers,
             ideas.STATE: ideas.handlers,
             contacts.STATE: contacts.handlers,
+            other.STATE: other.handlers,
         },
         fallbacks=[CommandHandler('cancel', cancel)],
     )

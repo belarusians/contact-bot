@@ -12,6 +12,7 @@ STATE = 'refugee'
 
 
 def handler(update: Update, context: CallbackContext) -> str:
+    context.user_data[STATE] = True
     reply_keyboard = [[help_with_advocate.TO_BTN, help_with_finance.TO_BTN, help_with_stuff.TO_BTN]]
     update.message.reply_text(
         MSG,
