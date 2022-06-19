@@ -1,7 +1,7 @@
 from telegram import Update, KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import CallbackContext, Filters, MessageHandler, ConversationHandler
 
-from src.notify import notify
+import notify
 
 STATE = 'contact'
 MSG = "Дзякуй! Зараз мы спытаем вашыя кантакты для зваротнай сувязі. Калі зваротная сувязь не патрэбна ці вы не хочаце даваць вашыя кантактныя данные - вы можаце адмовіцца"
@@ -28,7 +28,7 @@ def handler_contact(update: Update, context: CallbackContext) -> str:
         reply_markup=ReplyKeyboardRemove(),
     )
 
-    notify(update, context)
+    notify.notify(update, context)
 
     return ConversationHandler.END
 
@@ -40,7 +40,7 @@ def handler_reject_contact(update: Update, context: CallbackContext) -> str:
         reply_markup=ReplyKeyboardRemove(),
     )
 
-    notify(update, context)
+    notify.notify(update, context)
 
     return ConversationHandler.END
 

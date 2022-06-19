@@ -3,7 +3,7 @@ import logging
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, MessageHandler, Filters
 
-from src import contacts
+import contacts
 
 logger = logging.getLogger(__name__)
 

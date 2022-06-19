@@ -1,7 +1,7 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, MessageHandler, Filters
 
-from src import contacts
+import contacts
 
 TO_BTN = "Фінансавая дапамога"
 MSG = "На якія патрэбы?"
