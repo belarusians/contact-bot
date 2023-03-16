@@ -2,11 +2,12 @@ from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, MessageHandler, Filters
 
 import contacts
+from states import State
 
 TO_BTN = "Іншае"
 READY_BTN = "Гатова"
 MSG = "Я вас слухаю. Калі закончыце - націсніте кнопку \"{}\"".format(READY_BTN)
-STATE = "other"
+STATE = State.other
 
 
 def handler(update: Update, context: CallbackContext) -> str:
