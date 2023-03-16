@@ -4,44 +4,27 @@ from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, MessageHandler, Filters
 
 import contacts
+from constants import Button, State
+from decorators import save_message
+
 
 logger = logging.getLogger(__name__)
 
 MSG = "Па якой прычыне вам патрэбна дапамога з адвакатам?"
-TO_BTN = "Дапамога з адвакатам"
-HUMANITARIAN_REASONS_BTN = "Гуманітарныя прычыны"
-POLITICAL_REASONS_BTN = "Палітычныя прычыны"
-OTHER_REASONS_BTN = "Іншыя прычыны"
-
-STATE = 'help-with-advocate'
 
 
+@save_message
 def handler(update: Update, context: CallbackContext) -> str:
-    context.user_data[STATE] = True
-    reply_keyboard = [[HUMANITARIAN_REASONS_BTN, POLITICAL_REASONS_BTN, OTHER_REASONS_BTN]]
+    context.user_data[State.ADVOCATE_STATE] = True
+    reply_keyboard = [[Button.ADVOCATE_HUMANITARIAN_REASONS_BTN, Button.ADVOCATE_POLITICAL_REASONS_BTN, Button.ADVOCATE_OTHER_REASONS_BTN]]
     update.message.reply_text(
         MSG,
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True),
     )
 
-    return STATE
+    return State.ADVOCATE_STATE
 
-
-def humanitarian_handler(update: Update, context: CallbackContext) -> str:
-    context.user_data["humanitarian-reasons"] = True
-    return contacts.handler(update, context)
-
-
-def political_handler(update: Update, context: CallbackContext) -> str:
-    context.user_data["political-reasons"] = True
-    return contacts.handler(update, context)
-
-
-def other_handler(update: Update, context: CallbackContext) -> str:
-    context.user_data["other-reasons"] = True
-    return contacts.handler(update, context)
-
-
+@save_message
 def handler_fallback(update: Update, context: CallbackContext) -> str:
     update.message.reply_text("Калі ласка, выкарыстоўвайце клавіятуру")
 
@@ -49,8 +32,8 @@ def handler_fallback(update: Update, context: CallbackContext) -> str:
 
 
 handlers = [
-    MessageHandler(Filters.regex(HUMANITARIAN_REASONS_BTN), humanitarian_handler),
-    MessageHandler(Filters.regex(POLITICAL_REASONS_BTN), political_handler),
-    MessageHandler(Filters.regex(OTHER_REASONS_BTN), other_handler),
+    MessageHandler(Filters.regex(Button.ADVOCATE_HUMANITARIAN_REASONS_BTN), contacts.handler),
+    MessageHandler(Filters.regex(Button.ADVOCATE_POLITICAL_REASONS_BTN), contacts.handler),
+    MessageHandler(Filters.regex(Button.ADVOCATE_OTHER_REASONS_BTN), contacts.handler),
     MessageHandler(Filters.all, handler_fallback)
 ]

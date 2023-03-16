@@ -4,26 +4,27 @@ from telegram.ext import CallbackContext, MessageHandler, Filters
 import help_with_advocate
 import help_with_finance
 import help_with_stuff
+from constants import Button, State
+from decorators import save_message
 
 
-TO_BTN = "Я бежанец"
 MSG = "Якога кшталту дапамога вам патрэбна?"
-STATE = 'refugee'
 
 
+@save_message
 def handler(update: Update, context: CallbackContext) -> str:
-    context.user_data[STATE] = True
-    reply_keyboard = [[help_with_advocate.TO_BTN, help_with_finance.TO_BTN, help_with_stuff.TO_BTN]]
+    context.user_data[State.REFUGEE_STATE] = True
+    reply_keyboard = [[Button.ADVOCATE_TO_BTN, Button.FINANCE_TO_BTN, Button.STUFF_TO_BTN]]
     update.message.reply_text(
         MSG,
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True),
     )
 
-    return STATE
+    return State.REFUGEE_STATE
 
 
 handlers = [
-    MessageHandler(Filters.regex(help_with_advocate.TO_BTN), help_with_advocate.handler),
-    MessageHandler(Filters.regex(help_with_finance.TO_BTN), help_with_finance.handler),
-    MessageHandler(Filters.regex(help_with_stuff.TO_BTN), help_with_stuff.handler),
+    MessageHandler(Filters.regex(Button.ADVOCATE_TO_BTN), help_with_advocate.handler),
+    MessageHandler(Filters.regex(Button.FINANCE_TO_BTN), help_with_finance.handler),
+    MessageHandler(Filters.regex(Button.STUFF_TO_BTN), help_with_stuff.handler),
 ]

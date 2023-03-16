@@ -20,6 +20,8 @@ import help_with_advocate
 import other
 import ideas
 import contacts
+from constants import Button, State
+
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -33,7 +35,7 @@ GREETINGS_MSG = "Вітаем! Мы - беларуская дыяспара ў �
 
 def start(update: Update, context: CallbackContext) -> str:
     context.user_data.clear()
-    reply_keyboard = [[refugee.TO_BTN, ideas.TO_BTN, other.TO_BTN]]
+    reply_keyboard = [[Button.REFUGEE_TO_BTN, Button.IDEAS_TO_BTN, Button.OTHER_TO_BTN]]
 
     update.message.reply_text(
         GREETINGS_MSG,
@@ -66,17 +68,17 @@ def main() -> None:
         ],
         states={
             START: [
-                MessageHandler(Filters.regex(refugee.TO_BTN), refugee.handler),
-                MessageHandler(Filters.regex(other.TO_BTN), other.handler),
-                MessageHandler(Filters.regex(ideas.TO_BTN), ideas.handler)
+                MessageHandler(Filters.regex(Button.REFUGEE_TO_BTN), refugee.handler),
+                MessageHandler(Filters.regex(Button.OTHER_TO_BTN), other.handler),
+                MessageHandler(Filters.regex(Button.IDEAS_TO_BTN), ideas.handler)
             ],
-            refugee.STATE: refugee.handlers,
-            help_with_finance.STATE: help_with_finance.handlers,
-            help_with_stuff.STATE: help_with_stuff.handlers,
-            help_with_advocate.STATE: help_with_advocate.handlers,
-            ideas.STATE: ideas.handlers,
-            contacts.STATE: contacts.handlers,
-            other.STATE: other.handlers,
+            State.REFUGEE_STATE: refugee.handlers,
+            State.FINANCE_STATE: help_with_finance.handlers,
+            State.STUFF_STATE: help_with_stuff.handlers,
+            State.ADVOCATE_STATE: help_with_advocate.handlers,
+            State.IDEAS_STATE: ideas.handlers,
+            State.CONTACT_STATE: contacts.handlers,
+            State.OTHER_STATE: other.handlers,
         },
         fallbacks=[CommandHandler('cancel', cancel)],
     )
