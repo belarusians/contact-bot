@@ -3,7 +3,7 @@ FROM python:3.10.5-alpine3.15
 ARG VERSION_ARG=unknown
 ENV VERSION=$VERSION_ARG
 
-LABEL org.opencontainers.image.source https://github.com/slawiko/contact-bot
+LABEL org.opencontainers.image.source https://github.com/belarusians/contact-bot
 
 ENV USER=botuser \
     GROUP=botgroup
