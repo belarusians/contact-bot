@@ -20,6 +20,7 @@ import help_with_advocate
 import other
 import ideas
 import contacts
+import notify
 from constants import Button, State
 
 
@@ -52,19 +53,28 @@ def cancel(update: Update, context: CallbackContext) -> int:
     return ConversationHandler.END
 
 
-# def debug_handler(update: Update, context: CallbackContext) -> str:
-#     return ConversationHandler.END
+def handle_new_chat(update: Update, context: CallbackContext) -> None:
+    matches = [x for x in update.message.new_chat_members if x.id == context.bot.id]
+    if len(matches) > 0:
+        chat_id = update.effective_chat.id
+        notify.set_chat_id(chat_id)
+        context.bot.send_message(chat_id=chat_id, text=chat_id)
 
 
 def main() -> None:
-    updater = Updater(sys.argv[1])
+    token = sys.argv[1]
+    if not token:
+        print("Token is not provided")
+        exit(1)
+
+    updater = Updater(token)
 
     dispatcher = updater.dispatcher
 
     conv_handler = ConversationHandler(
         entry_points=[
-            # MessageHandler(Filters.all, debug_handler),
-            CommandHandler('start', start)
+            CommandHandler('start', start),
+            MessageHandler(Filters.all, handle_new_chat),
         ],
         states={
             START: [

@@ -1,4 +1,5 @@
 import telegram
+import sys
 from telegram import Update
 from telegram.ext import CallbackContext
 
@@ -14,6 +15,15 @@ template = """
 
 """
 
+chat_id = sys.argv[2]
+print("Chat ID: ", chat_id)
+
+
+def set_chat_id(c_id):
+    global chat_id
+    chat_id = c_id
+    print("Chat ID is updated to: ", chat_id)
+
 
 def notify(update: Update, context: CallbackContext) -> None:
     text = template.format(text=context.user_data[TEXT], state="Ідэі і прапановы")
@@ -23,7 +33,7 @@ def notify(update: Update, context: CallbackContext) -> None:
     else:
         send_contact = True
 
-    context.bot.send_message(chat_id=-1001743348246, parse_mode=telegram.ParseMode.HTML, text=text)
+    context.bot.send_message(chat_id=chat_id, parse_mode=telegram.ParseMode.HTML, text=text)
 
     if send_contact:
-        context.bot.send_contact(chat_id=-1001743348246, contact=context.user_data['contact'])
+        context.bot.send_contact(chat_id=chat_id, contact=context.user_data['contact'])
