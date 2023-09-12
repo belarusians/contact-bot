@@ -21,7 +21,7 @@ class Button(str, BaseEnum):
 
     ADVOCATE_TO_BTN = "Дапамога з адвакатам"
     FINANCE_TO_BTN = "Фінансавая дапамога"
-    STUFF_TO_BTN = "Матэрыяльная дапамога"
+    STUFF_TO_BTN = "Дапамога з адзеннем"
 
     ADVOCATE_OTHER_REASONS_BTN = "Іншыя прычыны"
     ADVOCATE_POLITICAL_REASONS_BTN = "Палітычныя прычыны"

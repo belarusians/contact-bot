@@ -9,9 +9,9 @@ from decorators import TEXT
 template = """
 <b>Новы запыт!</b>
 
-====================
+--------------------
 <i>{text}</i>
-====================
+--------------------
 
 """
 
@@ -26,7 +26,7 @@ def set_chat_id(c_id):
 
 
 def notify(update: Update, context: CallbackContext) -> None:
-    text = template.format(text=context.user_data[TEXT], state="Ідэі і прапановы")
+    text = template.format(text=context.user_data[TEXT])
     if 'contact' not in context.user_data or not context.user_data['contact']:
         text += "Карыстальнік не пакінуў кантактных дадзеных"
         send_contact = False

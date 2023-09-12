@@ -5,7 +5,7 @@ from constants import Button
 
 
 TEXT = "text"
-DELIMITER = "\n====================\n"
+DELIMITER = "\n--------------------\n"
 
 UNNEEDED_BUTTONS = {Button.IDEAS_READY_BTN, Button.OTHER_READY_BTN, Button.CONTACTS_BTN, Button.CONTACTS_REJ_BTN}
 
