@@ -15,7 +15,7 @@ template = """
 
 """
 
-chat_id = sys.argv[2]
+chat_id = sys.argv[2] if len(sys.argv) > 2 else None
 print("Chat ID: ", chat_id)
 
 
