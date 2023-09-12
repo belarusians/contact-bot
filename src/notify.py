@@ -1,8 +1,9 @@
-import telegram
 import sys
+import telegram
 from telegram import Update
 from telegram.ext import CallbackContext
 
+from logger import logger
 from decorators import TEXT
 
 
@@ -16,13 +17,13 @@ template = """
 """
 
 chat_id = sys.argv[2] if len(sys.argv) > 2 else None
-print("Chat ID: ", chat_id)
+logger.info("Chat ID: %s", chat_id)
 
 
 def set_chat_id(c_id):
     global chat_id
     chat_id = c_id
-    print("Chat ID is updated to: ", chat_id)
+    logger.info("Chat ID is updated to: %s", chat_id)
 
 
 def notify(update: Update, context: CallbackContext) -> None:

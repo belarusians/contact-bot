@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import logging
 import sys
 
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
@@ -21,14 +20,9 @@ import other
 import ideas
 import contacts
 import notify
+from logger import logger
 from constants import Button, State
 
-
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-)
-
-logger = logging.getLogger(__name__)
 
 START = "start"
 GREETINGS_MSG = "Вітаем! Мы - беларуская дыяспара ў Нідэрландах. Наконт чаго вы хацелі бы звязацца з намі?"
