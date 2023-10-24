@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import sys
+import threading
+import requests
 
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
@@ -97,5 +99,21 @@ def main() -> None:
     updater.idle()
 
 
+# https://stackoverflow.com/questions/2697039/python-equivalent-of-setinterval
+def set_interval(func, sec: int):
+    def func_wrapper():
+        set_interval(func, sec)
+        func()
+    t = threading.Timer(sec, func_wrapper)
+    t.start()
+    return t
+
+
+def heartbeat():
+    url = sys.argv[2]
+    requests.head(url)
+
+
 if __name__ == '__main__':
+    set_interval(heartbeat, 60 * 5)
     main()
