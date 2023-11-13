@@ -54,7 +54,9 @@ def handle_new_chat(update: Update, context: CallbackContext) -> None:
     if len(matches) > 0:
         chat_id = update.effective_chat.id
         notify.set_chat_id(chat_id)
-        context.bot.send_message(chat_id=chat_id, text=chat_id)
+        logger.info("Will notify in this chat_id {}".format(chat_id))
+        text = "Цяпер буду слаць запыты ў гэты чат ({})".format(chat_id)
+        context.bot.send_message(chat_id=chat_id, text=text)
 
 
 def main() -> None:
