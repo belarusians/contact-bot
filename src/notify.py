@@ -1,10 +1,10 @@
-import sys
 import telegram
 from telegram import Update
 from telegram.ext import CallbackContext
 
 from logger import logger
 from decorators import TEXT
+from args import args
 
 
 template = """
@@ -16,7 +16,7 @@ template = """
 
 """
 
-chat_id = sys.argv[2] if len(sys.argv) > 2 else None
+chat_id = args.chat
 logger.info("Chat ID: %s", chat_id)
 
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import sys
 import threading
 import requests
 
@@ -24,6 +23,7 @@ import contacts
 import notify
 from logger import logger
 from constants import Button, State
+from args import args
 
 
 START = "start"
@@ -58,7 +58,7 @@ def handle_new_chat(update: Update, context: CallbackContext) -> None:
 
 
 def main() -> None:
-    token = sys.argv[1]
+    token = args.apiKey
     if not token:
         print("Token is not provided")
         exit(1)
@@ -110,8 +110,9 @@ def set_interval(func, sec: int):
 
 
 def heartbeat():
-    url = sys.argv[2]
+    url = args.heartbeatUrl
     requests.head(url)
+    logger.debug("heartbeat")
 
 
 if __name__ == '__main__':
